@@ -11,3 +11,6 @@ first_number = 10
 second_number = 5
 total = first_number + second_number
 print(f"{first_number} + {second_number} = {total}")
+
+favorite_topics = ["variables", "numbers", "lists"]
+print("Topics I am learning:", favorite_topics)
