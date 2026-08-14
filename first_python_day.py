@@ -30,3 +30,10 @@ if is_practicing_today:
     print("I am making progress by practicing every day!")
 else:
     print("I will practice again tomorrow.")
+
+python_notes = {
+    "day": learning_day,
+    "student": student_name,
+    "goal": "learn the Python basics",
+}
+print("Today's goal:", python_notes["goal"])
