@@ -24,3 +24,9 @@ print("Topics I am learning:", favorite_topics)
 
 for topic in favorite_topics:
     print(f"I will practice {topic} today.")
+
+is_practicing_today = True
+if is_practicing_today:
+    print("I am making progress by practicing every day!")
+else:
+    print("I will practice again tomorrow.")
