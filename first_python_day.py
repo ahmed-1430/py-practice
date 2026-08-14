@@ -1,10 +1,17 @@
 """My first day practicing Python."""
 
+
+def say_hello(name):
+    """Print a friendly greeting."""
+    print(f"Hello, {name}!")
+
+
 print("Hello, Python!")
 print("Today I am coding Python for the first time.")
 
 student_name = "Ahmed"
 learning_day = 1
+say_hello(student_name)
 print(f"My name is {student_name}, and this is Python day {learning_day}.")
 
 first_number = 10
