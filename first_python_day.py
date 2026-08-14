@@ -6,6 +6,11 @@ def say_hello(name):
     print(f"Hello, {name}!")
 
 
+def add_numbers(number_one, number_two):
+    """Return the sum of two numbers."""
+    return number_one + number_two
+
+
 print("Hello, Python!")
 print("Today I am coding Python for the first time.")
 
@@ -17,6 +22,7 @@ print(f"My name is {student_name}, and this is Python day {learning_day}.")
 first_number = 10
 second_number = 5
 total = first_number + second_number
+total = add_numbers(first_number, second_number)
 print(f"{first_number} + {second_number} = {total}")
 
 favorite_topics = ["variables", "numbers", "lists"]
