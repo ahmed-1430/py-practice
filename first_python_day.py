@@ -14,3 +14,6 @@ print(f"{first_number} + {second_number} = {total}")
 
 favorite_topics = ["variables", "numbers", "lists"]
 print("Topics I am learning:", favorite_topics)
+
+for topic in favorite_topics:
+    print(f"I will practice {topic} today.")
