@@ -6,3 +6,7 @@ print("Today I am learning a little more about Python.")
 student_name = "Ahmed"
 learning_day = 2
 print(f"I am {student_name}, and this is practice day {learning_day}.")
+
+favorite_language = "python"
+print(f"My favorite language is {favorite_language.title()}.")
+print(f"In uppercase: {favorite_language.upper()}")
