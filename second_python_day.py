@@ -24,3 +24,10 @@ if completed_tasks >= 2:
     print("Great job! I completed my practice goal.")
 else:
     print("I will keep practicing until I reach my goal.")
+
+learning_plan = {
+    "topic": "strings and lists",
+    "minutes": 30,
+    "finished": True,
+}
+print(f"Today's topic: {learning_plan['topic']}")
