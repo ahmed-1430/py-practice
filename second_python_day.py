@@ -18,3 +18,9 @@ print("My practice tasks:", practice_tasks)
 study_times = ("morning", "afternoon", "evening")
 for study_time in study_times:
     print(f"I can study Python in the {study_time}.")
+
+completed_tasks = 2
+if completed_tasks >= 2:
+    print("Great job! I completed my practice goal.")
+else:
+    print("I will keep practicing until I reach my goal.")
