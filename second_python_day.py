@@ -10,3 +10,7 @@ print(f"I am {student_name}, and this is practice day {learning_day}.")
 favorite_language = "python"
 print(f"My favorite language is {favorite_language.title()}.")
 print(f"In uppercase: {favorite_language.upper()}")
+
+practice_tasks = ["read code", "write code"]
+practice_tasks.append("run examples")
+print("My practice tasks:", practice_tasks)
