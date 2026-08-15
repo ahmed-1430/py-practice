@@ -14,3 +14,7 @@ print(f"In uppercase: {favorite_language.upper()}")
 practice_tasks = ["read code", "write code"]
 practice_tasks.append("run examples")
 print("My practice tasks:", practice_tasks)
+
+study_times = ("morning", "afternoon", "evening")
+for study_time in study_times:
+    print(f"I can study Python in the {study_time}.")
