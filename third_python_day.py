@@ -29,3 +29,7 @@ for practice_number in practice_numbers:
         print(f"{practice_number} is even.")
     else:
         print(f"{practice_number} is odd.")
+
+practice_scores = [80, 90, 85]
+average_score = calculate_average(practice_scores)
+print(f"My average practice score is {average_score}.")
