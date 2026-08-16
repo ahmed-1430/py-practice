@@ -6,6 +6,11 @@ def square_number(number):
     return number * number
 
 
+def is_even(number):
+    """Return True when a number is even."""
+    return number % 2 == 0
+
+
 print("Welcome to Python practice day 3!")
 print("Today I am learning about functions and return values.")
 
