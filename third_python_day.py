@@ -38,3 +38,6 @@ for practice_number in practice_numbers:
 practice_scores = [80, 90, 85]
 average_score = calculate_average(practice_scores)
 print(f"My average practice score is {average_score}.")
+
+progress_report = build_progress_report(day=3, score=average_score)
+print(f"Day {progress_report['day']} message: {progress_report['message']}")
