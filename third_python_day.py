@@ -11,6 +11,11 @@ def is_even(number):
     return number % 2 == 0
 
 
+def calculate_average(numbers):
+    """Return the average value of a list of numbers."""
+    return sum(numbers) / len(numbers)
+
+
 print("Welcome to Python practice day 3!")
 print("Today I am learning about functions and return values.")
 
