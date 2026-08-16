@@ -17,3 +17,10 @@ print("Today I am learning about functions and return values.")
 number_to_square = 6
 squared_number = square_number(number_to_square)
 print(f"The square of {number_to_square} is {squared_number}.")
+
+practice_numbers = [1, 2, 3, 4, 5]
+for practice_number in practice_numbers:
+    if is_even(practice_number):
+        print(f"{practice_number} is even.")
+    else:
+        print(f"{practice_number} is odd.")
