@@ -16,6 +16,11 @@ def calculate_average(numbers):
     return sum(numbers) / len(numbers)
 
 
+def build_progress_report(day, score):
+    """Create a short dictionary that describes learning progress."""
+    return {"day": day, "score": score, "message": "Keep practicing!"}
+
+
 print("Welcome to Python practice day 3!")
 print("Today I am learning about functions and return values.")
 
