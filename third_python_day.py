@@ -21,23 +21,29 @@ def build_progress_report(day, score):
     return {"day": day, "score": score, "message": "Keep practicing!"}
 
 
-print("Welcome to Python practice day 3!")
-print("Today I am learning about functions and return values.")
+def main():
+    """Run the examples from my third Python practice day."""
+    print("Welcome to Python practice day 3!")
+    print("Today I am learning about functions and return values.")
 
-number_to_square = 6
-squared_number = square_number(number_to_square)
-print(f"The square of {number_to_square} is {squared_number}.")
+    number_to_square = 6
+    squared_number = square_number(number_to_square)
+    print(f"The square of {number_to_square} is {squared_number}.")
 
-practice_numbers = [1, 2, 3, 4, 5]
-for practice_number in practice_numbers:
-    if is_even(practice_number):
-        print(f"{practice_number} is even.")
-    else:
-        print(f"{practice_number} is odd.")
+    practice_numbers = [1, 2, 3, 4, 5]
+    for practice_number in practice_numbers:
+        if is_even(practice_number):
+            print(f"{practice_number} is even.")
+        else:
+            print(f"{practice_number} is odd.")
 
-practice_scores = [80, 90, 85]
-average_score = calculate_average(practice_scores)
-print(f"My average practice score is {average_score}.")
+    practice_scores = [80, 90, 85]
+    average_score = calculate_average(practice_scores)
+    print(f"My average practice score is {average_score}.")
 
-progress_report = build_progress_report(day=3, score=average_score)
-print(f"Day {progress_report['day']} message: {progress_report['message']}")
+    progress_report = build_progress_report(day=3, score=average_score)
+    print(f"Day {progress_report['day']} message: {progress_report['message']}")
+
+
+if __name__ == "__main__":
+    main()
