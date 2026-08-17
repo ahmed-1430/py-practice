@@ -13,6 +13,15 @@ def show_tasks(tasks):
         print(f"- {task['title']} ({status})")
 
 
+def mark_task_complete(tasks, title):
+    """Mark a task complete and report whether it was found."""
+    for task in tasks:
+        if task["title"] == title:
+            task["complete"] = True
+            return True
+    return False
+
+
 print("Welcome to Python practice day 4!")
 print("Today I am building a small task-list program.")
 
