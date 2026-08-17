@@ -6,6 +6,13 @@ def add_task(tasks, title):
     tasks.append({"title": title, "complete": False})
 
 
+def show_tasks(tasks):
+    """Print every task with its current status."""
+    for task in tasks:
+        status = "done" if task["complete"] else "to do"
+        print(f"- {task['title']} ({status})")
+
+
 print("Welcome to Python practice day 4!")
 print("Today I am building a small task-list program.")
 
