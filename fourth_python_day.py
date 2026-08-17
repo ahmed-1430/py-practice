@@ -22,6 +22,11 @@ def mark_task_complete(tasks, title):
     return False
 
 
+def count_completed(tasks):
+    """Return the number of completed tasks."""
+    return sum(task["complete"] for task in tasks)
+
+
 print("Welcome to Python practice day 4!")
 print("Today I am building a small task-list program.")
 
