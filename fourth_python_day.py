@@ -19,3 +19,6 @@ print("Today I am building a small task-list program.")
 my_tasks = []
 add_task(my_tasks, "Read Python notes")
 add_task(my_tasks, "Write a practice program")
+
+print("My tasks for today:")
+show_tasks(my_tasks)
