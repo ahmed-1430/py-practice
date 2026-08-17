@@ -8,3 +8,7 @@ def add_task(tasks, title):
 
 print("Welcome to Python practice day 4!")
 print("Today I am building a small task-list program.")
+
+my_tasks = []
+add_task(my_tasks, "Read Python notes")
+add_task(my_tasks, "Write a practice program")
