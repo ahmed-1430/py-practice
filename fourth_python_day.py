@@ -27,6 +27,12 @@ def count_completed(tasks):
     return sum(task["complete"] for task in tasks)
 
 
+def create_summary(tasks):
+    """Return a dictionary with task-list progress details."""
+    completed = count_completed(tasks)
+    return {"total": len(tasks), "completed": completed, "remaining": len(tasks) - completed}
+
+
 print("Welcome to Python practice day 4!")
 print("Today I am building a small task-list program.")
 
