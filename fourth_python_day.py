@@ -49,3 +49,6 @@ show_tasks(my_tasks)
 
 completed_count = count_completed(my_tasks)
 print(f"Completed tasks: {completed_count}")
+
+summary = create_summary(my_tasks)
+print(f"Remaining tasks: {summary['remaining']} of {summary['total']}")
