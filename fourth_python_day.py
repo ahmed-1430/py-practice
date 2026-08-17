@@ -31,3 +31,7 @@ add_task(my_tasks, "Write a practice program")
 
 print("My tasks for today:")
 show_tasks(my_tasks)
+
+mark_task_complete(my_tasks, "Read Python notes")
+print("\nAfter completing one task:")
+show_tasks(my_tasks)
