@@ -33,22 +33,28 @@ def create_summary(tasks):
     return {"total": len(tasks), "completed": completed, "remaining": len(tasks) - completed}
 
 
-print("Welcome to Python practice day 4!")
-print("Today I am building a small task-list program.")
+def main():
+    """Run the examples from my fourth Python practice day."""
+    print("Welcome to Python practice day 4!")
+    print("Today I am building a small task-list program.")
 
-my_tasks = []
-add_task(my_tasks, "Read Python notes")
-add_task(my_tasks, "Write a practice program")
+    my_tasks = []
+    add_task(my_tasks, "Read Python notes")
+    add_task(my_tasks, "Write a practice program")
 
-print("My tasks for today:")
-show_tasks(my_tasks)
+    print("My tasks for today:")
+    show_tasks(my_tasks)
 
-mark_task_complete(my_tasks, "Read Python notes")
-print("\nAfter completing one task:")
-show_tasks(my_tasks)
+    mark_task_complete(my_tasks, "Read Python notes")
+    print("\nAfter completing one task:")
+    show_tasks(my_tasks)
 
-completed_count = count_completed(my_tasks)
-print(f"Completed tasks: {completed_count}")
+    completed_count = count_completed(my_tasks)
+    print(f"Completed tasks: {completed_count}")
 
-summary = create_summary(my_tasks)
-print(f"Remaining tasks: {summary['remaining']} of {summary['total']}")
+    summary = create_summary(my_tasks)
+    print(f"Remaining tasks: {summary['remaining']} of {summary['total']}")
+
+
+if __name__ == "__main__":
+    main()
