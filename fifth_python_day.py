@@ -14,6 +14,10 @@ class Book:
         """Return a readable description of the book."""
         return f"{self.title} by {self.author} ({self.total_pages} pages)"
 
+    def read_pages(self, pages):
+        """Record pages read without going beyond the end of the book."""
+        self.pages_read = min(self.pages_read + pages, self.total_pages)
+
 
 print("Welcome to Python practice day 5!")
 print("Today I am learning the basics of Python classes.")
