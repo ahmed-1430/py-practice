@@ -24,3 +24,6 @@ print("Today I am learning the basics of Python classes.")
 
 current_book = Book("Python Basics", "Ahmed", 120)
 print("Current book:", current_book.describe())
+
+current_book.read_pages(35)
+print(f"Pages read today: {current_book.pages_read}")
