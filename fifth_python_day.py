@@ -18,6 +18,10 @@ class Book:
         """Record pages read without going beyond the end of the book."""
         self.pages_read = min(self.pages_read + pages, self.total_pages)
 
+    def is_finished(self):
+        """Return True when every page has been read."""
+        return self.pages_read == self.total_pages
+
 
 print("Welcome to Python practice day 5!")
 print("Today I am learning the basics of Python classes.")
