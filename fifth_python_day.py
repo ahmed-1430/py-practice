@@ -31,3 +31,8 @@ print("Current book:", current_book.describe())
 
 current_book.read_pages(35)
 print(f"Pages read today: {current_book.pages_read}")
+
+if current_book.is_finished():
+    print("I finished the book!")
+else:
+    print("I still have some pages to read.")
