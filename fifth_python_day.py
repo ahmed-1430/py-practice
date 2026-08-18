@@ -17,3 +17,6 @@ class Book:
 
 print("Welcome to Python practice day 5!")
 print("Today I am learning the basics of Python classes.")
+
+current_book = Book("Python Basics", "Ahmed", 120)
+print("Current book:", current_book.describe())
