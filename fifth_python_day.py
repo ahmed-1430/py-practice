@@ -10,6 +10,10 @@ class Book:
         self.total_pages = total_pages
         self.pages_read = 0
 
+    def describe(self):
+        """Return a readable description of the book."""
+        return f"{self.title} by {self.author} ({self.total_pages} pages)"
+
 
 print("Welcome to Python practice day 5!")
 print("Today I am learning the basics of Python classes.")
