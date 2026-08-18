@@ -22,6 +22,14 @@ class Book:
         """Return True when every page has been read."""
         return self.pages_read == self.total_pages
 
+    def progress_summary(self):
+        """Return a dictionary with the current reading progress."""
+        return {
+            "title": self.title,
+            "pages_read": self.pages_read,
+            "pages_remaining": self.total_pages - self.pages_read,
+        }
+
 
 print("Welcome to Python practice day 5!")
 print("Today I am learning the basics of Python classes.")
@@ -36,3 +44,6 @@ if current_book.is_finished():
     print("I finished the book!")
 else:
     print("I still have some pages to read.")
+
+summary = current_book.progress_summary()
+print(f"Pages remaining: {summary['pages_remaining']}")
