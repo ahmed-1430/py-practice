@@ -184,3 +184,20 @@ if member.borrow_book(book_three):
 
 member.show_books()
 library.show_books()
+
+
+
+
+def borrow_book(self, book):
+    """Borrow a book and store it for the member."""
+
+    if book in self.borrowed_books:
+        print(f"{self.name} already borrowed '{book.title}'.")
+        return False
+
+    if book.borrow():
+        self.borrowed_books.append(book)
+        return True
+
+    print(f"'{book.title}' is already borrowed.")
+    return False
