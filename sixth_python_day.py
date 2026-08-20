@@ -166,4 +166,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(member_two = Member("John")
+member_three = Member("Sarah")
+
+library.add_member(member_two)
+library.add_member(member_three))
