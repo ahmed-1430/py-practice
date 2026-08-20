@@ -171,3 +171,16 @@ member_three = Member("Sarah")
 
 library.add_member(member_two)
 library.add_member(member_three))
+
+
+
+print("\nBorrowing multiple books...")
+
+if member.borrow_book(book_two):
+    print(f"{member.name} borrowed '{book_two.title}'.")
+
+if member.borrow_book(book_three):
+    print(f"{member.name} borrowed '{book_three.title}'.")
+
+member.show_books()
+library.show_books()
