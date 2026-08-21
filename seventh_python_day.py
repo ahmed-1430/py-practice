@@ -42,14 +42,28 @@ class Student(Person):
         return sum(self.grades) / len(self.grades)
 
 
-student_one = Student("Ahmed", 24, "ST001")
-student_two = Student("John", 21, "ST002")
-student_three = Student("Sarah", 22, "ST003")
+def find_student(students, student_id):
+    """Find a student by ID."""
+
+    for student in students:
+        if student.student_id == student_id:
+            return student
+
+    return None
+
+
+students = [
+    Student("Ahmed", 24, "ST001"),
+    Student("John", 21, "ST002"),
+    Student("Sarah", 22, "ST003"),
+]
 
 print("Python Practice Day 7")
 
-print(student_one.introduce())
-print(student_two.introduce())
-print(student_three.introduce())
+student = find_student(students, "ST002")
 
-print(f"Total students: {Student.total_students}")
+if student:
+    print("Student found:")
+    print(student.introduce())
+else:
+    print("Student not found.")
