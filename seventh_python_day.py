@@ -9,7 +9,7 @@ class Person:
         self.age = age
 
     def introduce(self):
-        return f"My name is {self.name} and I am {self.age} years old."
+        return f"My name is {self.name}."
 
 
 class Student(Person):
@@ -20,13 +20,13 @@ class Student(Person):
         self.student_id = student_id
         self.grades = []
 
+    def introduce(self):
+        return f"I am student {self.name}. My ID is {self.student_id}."
+
     def add_grade(self, grade):
-        """Add a grade to the student."""
         self.grades.append(grade)
 
     def average_grade(self):
-        """Calculate the average grade."""
-
         if not self.grades:
             return 0
 
@@ -40,18 +40,16 @@ class Teacher(Person):
         super().__init__(name, age)
         self.subject = subject
 
-    def teach(self):
-        return f"{self.name} teaches {self.subject}."
+    def introduce(self):
+        return f"I am teacher {self.name}. I teach {self.subject}."
 
 
-student = Student("John", 21, "ST001")
-
-student.add_grade(85)
-student.add_grade(90)
-student.add_grade(95)
+people = [
+    Student("John", 21, "ST001"),
+    Teacher("Sarah", 35, "Python"),
+]
 
 print("Python Practice Day 7")
-print(student.introduce())
-print(f"Student ID: {student.student_id}")
-print(f"Grades: {student.grades}")
-print(f"Average: {student.average_grade():.2f}")
+
+for person in people:
+    print(person.introduce())
