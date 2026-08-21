@@ -15,17 +15,19 @@ class Person:
 class Student(Person):
     """Represent a student."""
 
+    total_students = 0
+
     def __init__(self, name, age, student_id):
         super().__init__(name, age)
         self.student_id = student_id
         self.grades = []
 
+        Student.total_students += 1
+
     def introduce(self):
         return f"I am student {self.name}. My ID is {self.student_id}."
 
     def add_grade(self, grade):
-        """Add a valid grade."""
-
         if 0 <= grade <= 100:
             self.grades.append(grade)
             return True
@@ -40,13 +42,14 @@ class Student(Person):
         return sum(self.grades) / len(self.grades)
 
 
-student = Student("Ahmed", 24, "ST001")
-
-student.add_grade(85)
-student.add_grade(90)
-student.add_grade(105)
+student_one = Student("Ahmed", 24, "ST001")
+student_two = Student("John", 21, "ST002")
+student_three = Student("Sarah", 22, "ST003")
 
 print("Python Practice Day 7")
-print(student.introduce())
-print(f"Grades: {student.grades}")
-print(f"Average: {student.average_grade():.2f}")
+
+print(student_one.introduce())
+print(student_two.introduce())
+print(student_three.introduce())
+
+print(f"Total students: {Student.total_students}")
