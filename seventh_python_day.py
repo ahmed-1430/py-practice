@@ -18,6 +18,19 @@ class Student(Person):
     def __init__(self, name, age, student_id):
         super().__init__(name, age)
         self.student_id = student_id
+        self.grades = []
+
+    def add_grade(self, grade):
+        """Add a grade to the student."""
+        self.grades.append(grade)
+
+    def average_grade(self):
+        """Calculate the average grade."""
+
+        if not self.grades:
+            return 0
+
+        return sum(self.grades) / len(self.grades)
 
 
 class Teacher(Person):
@@ -32,10 +45,13 @@ class Teacher(Person):
 
 
 student = Student("John", 21, "ST001")
-teacher = Teacher("Sarah", 35, "Python")
+
+student.add_grade(85)
+student.add_grade(90)
+student.add_grade(95)
 
 print("Python Practice Day 7")
 print(student.introduce())
 print(f"Student ID: {student.student_id}")
-print(teacher.introduce())
-print(teacher.teach())
+print(f"Grades: {student.grades}")
+print(f"Average: {student.average_grade():.2f}")
