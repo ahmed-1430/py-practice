@@ -24,7 +24,14 @@ class Student(Person):
         return f"I am student {self.name}. My ID is {self.student_id}."
 
     def add_grade(self, grade):
-        self.grades.append(grade)
+        """Add a valid grade."""
+
+        if 0 <= grade <= 100:
+            self.grades.append(grade)
+            return True
+
+        print("Grade must be between 0 and 100.")
+        return False
 
     def average_grade(self):
         if not self.grades:
@@ -33,23 +40,13 @@ class Student(Person):
         return sum(self.grades) / len(self.grades)
 
 
-class Teacher(Person):
-    """Represent a teacher."""
+student = Student("Ahmed", 24, "ST001")
 
-    def __init__(self, name, age, subject):
-        super().__init__(name, age)
-        self.subject = subject
-
-    def introduce(self):
-        return f"I am teacher {self.name}. I teach {self.subject}."
-
-
-people = [
-    Student("John", 21, "ST001"),
-    Teacher("Sarah", 35, "Python"),
-]
+student.add_grade(85)
+student.add_grade(90)
+student.add_grade(105)
 
 print("Python Practice Day 7")
-
-for person in people:
-    print(person.introduce())
+print(student.introduce())
+print(f"Grades: {student.grades}")
+print(f"Average: {student.average_grade():.2f}")
