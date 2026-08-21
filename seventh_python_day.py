@@ -1,0 +1,1 @@
+"""My seventh day practicing Python."""
