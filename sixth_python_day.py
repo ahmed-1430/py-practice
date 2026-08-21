@@ -35,14 +35,21 @@ class Member:
 
     def borrow_book(self, book):
         """Borrow a book and store it for the member."""
+
+        if book in self.borrowed_books:
+            print(f"{self.name} already borrowed '{book.title}'.")
+            return False
+
         if book.borrow():
             self.borrowed_books.append(book)
             return True
 
+        print(f"'{book.title}' is already borrowed.")
         return False
 
     def return_book(self, book):
         """Return a book borrowed by the member."""
+
         if book in self.borrowed_books:
             book.return_book()
             self.borrowed_books.remove(book)
@@ -52,6 +59,7 @@ class Member:
 
     def show_books(self):
         """Show all books borrowed by the member."""
+
         if not self.borrowed_books:
             print(f"{self.name} has no borrowed books.")
             return
@@ -80,6 +88,7 @@ class Library:
 
     def find_book(self, title):
         """Find a book by its title."""
+
         for book in self.books:
             if book.title.lower() == title.lower():
                 return book
@@ -88,6 +97,7 @@ class Library:
 
     def show_books(self):
         """Display all books in the library."""
+
         print(f"\nBooks in {self.name}:")
 
         for book in self.books:
@@ -95,6 +105,7 @@ class Library:
 
     def library_summary(self):
         """Return library statistics."""
+
         total_books = len(self.books)
         borrowed_books = sum(book.is_borrowed for book in self.books)
         available_books = total_books - borrowed_books
@@ -123,8 +134,13 @@ def main():
     library.add_book(book_two)
     library.add_book(book_three)
 
-    member = Member("Ahmed")
-    library.add_member(member)
+    member_one = Member("Ahmed")
+    member_two = Member("John")
+    member_three = Member("Sarah")
+
+    library.add_member(member_one)
+    library.add_member(member_two)
+    library.add_member(member_three)
 
     library.show_books()
 
@@ -137,22 +153,33 @@ def main():
     else:
         print("Book not found.")
 
-    print("\nBorrowing a book...")
+    print("\nBorrowing books...")
 
-    if member.borrow_book(book_one):
-        print(f"{member.name} borrowed '{book_one.title}'.")
-    else:
-        print("Book is already borrowed.")
+    if member_one.borrow_book(book_one):
+        print(f"{member_one.name} borrowed '{book_one.title}'.")
+
+    if member_two.borrow_book(book_two):
+        print(f"{member_two.name} borrowed '{book_two.title}'.")
+
+    if member_three.borrow_book(book_three):
+        print(f"{member_three.name} borrowed '{book_three.title}'.")
 
     library.show_books()
-    member.show_books()
 
-    print("\nReturning the book...")
+    print()
+    member_one.show_books()
+    member_two.show_books()
+    member_three.show_books()
 
-    if member.return_book(book_one):
-        print(f"{member.name} returned '{book_one.title}'.")
-    else:
-        print("This member does not have that book.")
+    print("\nTrying to borrow an already borrowed book...")
+
+    if not member_two.borrow_book(book_one):
+        print("The book could not be borrowed.")
+
+    print("\nReturning a book...")
+
+    if member_one.return_book(book_one):
+        print(f"{member_one.name} returned '{book_one.title}'.")
 
     library.show_books()
 
@@ -166,38 +193,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main(member_two = Member("John")
-member_three = Member("Sarah")
-
-library.add_member(member_two)
-library.add_member(member_three))
-
-
-
-print("\nBorrowing multiple books...")
-
-if member.borrow_book(book_two):
-    print(f"{member.name} borrowed '{book_two.title}'.")
-
-if member.borrow_book(book_three):
-    print(f"{member.name} borrowed '{book_three.title}'.")
-
-member.show_books()
-library.show_books()
-
-
-
-
-def borrow_book(self, book):
-    """Borrow a book and store it for the member."""
-
-    if book in self.borrowed_books:
-        print(f"{self.name} already borrowed '{book.title}'.")
-        return False
-
-    if book.borrow():
-        self.borrowed_books.append(book)
-        return True
-
-    print(f"'{book.title}' is already borrowed.")
-    return False
+    main()
