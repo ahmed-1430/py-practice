@@ -26,12 +26,25 @@ def calculate_average(grades):
     return sum(grades) / len(grades)
 
 
+def save_students_to_file(students):
+    """Save students to a text file."""
+
+    with open("students.txt", "w", encoding="utf-8") as file:
+        for student in students:
+            average = calculate_average(student["grades"])
+
+            file.write(
+                f"Name: {student['name']}\n"
+                f"Age: {student['age']}\n"
+                f"ID: {student['student_id']}\n"
+                f"Grades: {student['grades']}\n"
+                f"Average: {average:.2f}\n"
+                f"{'-' * 30}\n"
+            )
+
+
 print("Python Practice Day 8")
 
-for student in students:
-    average = calculate_average(student["grades"])
+save_students_to_file(students)
 
-    print(
-        f"{student['name']} - "
-        f"Average: {average:.2f}"
-    )
+print("Student data saved successfully.")
