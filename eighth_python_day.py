@@ -1,5 +1,6 @@
 """My eighth day practicing Python."""
 
+
 students = [
     {
         "name": "Ahmed",
@@ -16,7 +17,21 @@ students = [
 ]
 
 
+def calculate_average(grades):
+    """Calculate the average of grades."""
+
+    if not grades:
+        return 0
+
+    return sum(grades) / len(grades)
+
+
 print("Python Practice Day 8")
 
 for student in students:
-    print(student)
+    average = calculate_average(student["grades"])
+
+    print(
+        f"{student['name']} - "
+        f"Average: {average:.2f}"
+    )
