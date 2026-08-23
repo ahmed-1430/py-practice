@@ -21,51 +21,76 @@ def save_students(students):
         json.dump(students, file, indent=4)
 
 
-def student_exists(students, student_id):
-    """Check whether a student already exists."""
+def find_student(students, student_id):
+    """Find a student by ID."""
 
     for student in students:
         if student["student_id"] == student_id:
-            return True
+            return student
 
-    return False
+    return None
 
 
 def add_student(students, name, age, student_id):
     """Add a new student."""
 
-    if student_exists(students, student_id):
+    if find_student(students, student_id):
         print("Student ID already exists.")
         return False
 
-    student = {
-        "name": name,
-        "age": age,
-        "student_id": student_id,
-        "grades": [],
-    }
-
-    students.append(student)
+    students.append(
+        {
+            "name": name,
+            "age": age,
+            "student_id": student_id,
+            "grades": [],
+        }
+    )
 
     return True
 
 
+def add_grade(students, student_id, grade):
+    """Add a grade to a student."""
+
+    if not 0 <= grade <= 100:
+        print("Grade must be between 0 and 100.")
+        return False
+
+    student = find_student(students, student_id)
+
+    if student is None:
+        print("Student not found.")
+        return False
+
+    student["grades"].append(grade)
+
+    return True
+
+
+def calculate_average(grades):
+    """Calculate grade average."""
+
+    if not grades:
+        return 0
+
+    return sum(grades) / len(grades)
+
+
 students = load_students()
 
-if add_student(
-    students,
-    "David",
-    23,
-    "ST004",
-):
-    save_students(students)
-    print("Student added successfully.")
+add_grade(students, "ST001", 88)
+add_grade(students, "ST001", 92)
 
+save_students(students)
 
-print("\nCurrent Students:")
+print("Python Practice Day 8")
 
-for student in students:
-    print(
-        f"{student['student_id']} - "
-        f"{student['name']}"
-    )
+student = find_student(students, "ST001")
+
+if student:
+    average = calculate_average(student["grades"])
+
+    print(f"Name: {student['name']}")
+    print(f"Grades: {student['grades']}")
+    print(f"Average: {average:.2f}")
