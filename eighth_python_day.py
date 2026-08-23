@@ -21,8 +21,22 @@ def save_students(students):
         json.dump(students, file, indent=4)
 
 
+def student_exists(students, student_id):
+    """Check whether a student already exists."""
+
+    for student in students:
+        if student["student_id"] == student_id:
+            return True
+
+    return False
+
+
 def add_student(students, name, age, student_id):
     """Add a new student."""
+
+    if student_exists(students, student_id):
+        print("Student ID already exists.")
+        return False
 
     student = {
         "name": name,
@@ -33,20 +47,22 @@ def add_student(students, name, age, student_id):
 
     students.append(student)
 
+    return True
+
 
 students = load_students()
 
-add_student(
+if add_student(
     students,
-    "Sarah",
-    22,
-    "ST003",
-)
+    "David",
+    23,
+    "ST004",
+):
+    save_students(students)
+    print("Student added successfully.")
 
-save_students(students)
 
-print("Python Practice Day 8")
-print("Student added successfully.")
+print("\nCurrent Students:")
 
 for student in students:
     print(
