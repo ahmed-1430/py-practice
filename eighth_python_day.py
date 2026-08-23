@@ -43,8 +43,20 @@ def save_students_to_file(students):
             )
 
 
+def read_students_file():
+    """Read the student file."""
+
+    with open("students.txt", "r", encoding="utf-8") as file:
+        content = file.read()
+
+    return content
+
+
 print("Python Practice Day 8")
 
 save_students_to_file(students)
 
-print("Student data saved successfully.")
+content = read_students_file()
+
+print("\nSaved File Content:")
+print(content)
