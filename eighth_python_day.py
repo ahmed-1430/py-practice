@@ -1,5 +1,7 @@
 """My eighth day practicing Python."""
 
+import json
+
 
 students = [
     {
@@ -17,46 +19,30 @@ students = [
 ]
 
 
-def calculate_average(grades):
-    """Calculate the average of grades."""
+def save_students_to_json(students):
+    """Save students as JSON."""
 
-    if not grades:
-        return 0
-
-    return sum(grades) / len(grades)
+    with open("students.json", "w", encoding="utf-8") as file:
+        json.dump(students, file, indent=4)
 
 
-def save_students_to_file(students):
-    """Save students to a text file."""
+def read_students_from_json():
+    """Read students from JSON."""
 
-    with open("students.txt", "w", encoding="utf-8") as file:
-        for student in students:
-            average = calculate_average(student["grades"])
-
-            file.write(
-                f"Name: {student['name']}\n"
-                f"Age: {student['age']}\n"
-                f"ID: {student['student_id']}\n"
-                f"Grades: {student['grades']}\n"
-                f"Average: {average:.2f}\n"
-                f"{'-' * 30}\n"
-            )
-
-
-def read_students_file():
-    """Read the student file."""
-
-    with open("students.txt", "r", encoding="utf-8") as file:
-        content = file.read()
-
-    return content
+    with open("students.json", "r", encoding="utf-8") as file:
+        return json.load(file)
 
 
 print("Python Practice Day 8")
 
-save_students_to_file(students)
+save_students_to_json(students)
 
-content = read_students_file()
+loaded_students = read_students_from_json()
 
-print("\nSaved File Content:")
-print(content)
+print("\nStudents loaded from JSON:")
+
+for student in loaded_students:
+    print(
+        f"{student['name']} - "
+        f"{student['student_id']}"
+    )
