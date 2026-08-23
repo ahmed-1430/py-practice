@@ -3,46 +3,53 @@
 import json
 
 
-students = [
-    {
-        "name": "Ahmed",
-        "age": 24,
-        "student_id": "ST001",
-        "grades": [90, 85, 95],
-    },
-    {
-        "name": "John",
-        "age": 21,
-        "student_id": "ST002",
-        "grades": [70, 65, 75],
-    },
-]
+def load_students():
+    """Load students from JSON."""
+
+    try:
+        with open("students.json", "r", encoding="utf-8") as file:
+            return json.load(file)
+
+    except FileNotFoundError:
+        return []
 
 
-def save_students_to_json(students):
-    """Save students as JSON."""
+def save_students(students):
+    """Save students to JSON."""
 
     with open("students.json", "w", encoding="utf-8") as file:
         json.dump(students, file, indent=4)
 
 
-def read_students_from_json():
-    """Read students from JSON."""
+def add_student(students, name, age, student_id):
+    """Add a new student."""
 
-    with open("students.json", "r", encoding="utf-8") as file:
-        return json.load(file)
+    student = {
+        "name": name,
+        "age": age,
+        "student_id": student_id,
+        "grades": [],
+    }
 
+    students.append(student)
+
+
+students = load_students()
+
+add_student(
+    students,
+    "Sarah",
+    22,
+    "ST003",
+)
+
+save_students(students)
 
 print("Python Practice Day 8")
+print("Student added successfully.")
 
-save_students_to_json(students)
-
-loaded_students = read_students_from_json()
-
-print("\nStudents loaded from JSON:")
-
-for student in loaded_students:
+for student in students:
     print(
-        f"{student['name']} - "
-        f"{student['student_id']}"
+        f"{student['student_id']} - "
+        f"{student['name']}"
     )
