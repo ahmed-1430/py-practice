@@ -1,28 +1,31 @@
 """My ninth day practicing Python."""
 
 
-expenses = [
-    {
-        "title": "Lunch",
-        "amount": 150,
-        "category": "Food",
-    },
-    {
-        "title": "Bus",
-        "amount": 50,
-        "category": "Transport",
-    },
-]
+expenses = []
 
 
-def calculate_total(expenses):
-    """Calculate total expenses."""
+def add_expense(expenses, title, amount, category):
+    """Add a new expense."""
 
-    return sum(expense["amount"] for expense in expenses)
+    expense = {
+        "title": title,
+        "amount": amount,
+        "category": category,
+    }
+
+    expenses.append(expense)
+
+
+add_expense(expenses, "Lunch", 150, "Food")
+add_expense(expenses, "Bus", 50, "Transport")
+add_expense(expenses, "Coffee", 120, "Food")
 
 
 print("Python Practice Day 9")
 
-total = calculate_total(expenses)
-
-print(f"Total expenses: {total} BDT")
+for expense in expenses:
+    print(
+        f"{expense['title']} - "
+        f"{expense['amount']} BDT - "
+        f"{expense['category']}"
+    )
