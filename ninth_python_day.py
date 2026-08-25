@@ -1,5 +1,6 @@
 """My ninth day practicing Python."""
 
+
 expenses = [
     {
         "title": "Lunch",
@@ -14,11 +15,14 @@ expenses = [
 ]
 
 
+def calculate_total(expenses):
+    """Calculate total expenses."""
+
+    return sum(expense["amount"] for expense in expenses)
+
+
 print("Python Practice Day 9")
 
-for expense in expenses:
-    print(
-        f"{expense['title']} - "
-        f"{expense['amount']} BDT - "
-        f"{expense['category']}"
-    )
+total = calculate_total(expenses)
+
+print(f"Total expenses: {total} BDT")
