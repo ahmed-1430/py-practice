@@ -1,42 +1,25 @@
 """My ninth day practicing Python."""
 
 
-expenses = []
+def get_amount():
+    """Get a valid amount from the user."""
 
+    while True:
+        try:
+            amount = float(input("Enter expense amount: "))
 
-def add_expense(expenses, title, amount, category):
-    """Add a validated expense."""
+            if amount <= 0:
+                print("Amount must be greater than zero.")
+                continue
 
-    if not title.strip():
-        print("Expense title cannot be empty.")
-        return False
+            return amount
 
-    if amount <= 0:
-        print("Amount must be greater than zero.")
-        return False
-
-    if not category.strip():
-        print("Category cannot be empty.")
-        return False
-
-    expense = {
-        "title": title,
-        "amount": amount,
-        "category": category,
-    }
-
-    expenses.append(expense)
-
-    return True
-
-
-add_expense(expenses, "Lunch", 150, "Food")
-add_expense(expenses, "Bus", 50, "Transport")
-add_expense(expenses, "", 100, "Food")
-add_expense(expenses, "Coffee", -20, "Food")
+        except ValueError:
+            print("Please enter a valid number.")
 
 
 print("Python Practice Day 9")
 
-for expense in expenses:
-    print(expense)
+amount = get_amount()
+
+print(f"You entered: {amount:.2f} BDT")
