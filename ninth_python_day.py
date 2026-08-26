@@ -1,6 +1,7 @@
 """My ninth day practicing Python."""
 
 import json
+from datetime import datetime
 
 
 DATA_FILE = "expenses.json"
@@ -17,7 +18,6 @@ def load_expenses():
         return []
 
     except json.JSONDecodeError:
-        print("Expense file is corrupted.")
         return []
 
 
@@ -29,12 +29,13 @@ def save_expenses(expenses):
 
 
 def add_expense(expenses, title, amount, category):
-    """Add a new expense."""
+    """Add a new expense with the current date."""
 
     expense = {
         "title": title,
         "amount": amount,
         "category": category,
+        "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
     }
 
     expenses.append(expense)
@@ -52,4 +53,10 @@ add_expense(
 save_expenses(expenses)
 
 print("Python Practice Day 9")
-print("Expense saved successfully.")
+
+for expense in expenses:
+    print(
+        f"{expense['date']} | "
+        f"{expense['title']} | "
+        f"{expense['amount']} BDT"
+    )
