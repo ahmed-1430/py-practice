@@ -14,7 +14,11 @@ def load_expenses():
         with open(DATA_FILE, "r", encoding="utf-8") as file:
             return json.load(file)
 
-    except (FileNotFoundError, json.JSONDecodeError):
+    except FileNotFoundError:
+        return []
+
+    except json.JSONDecodeError:
+        print("Warning: expense data is corrupted.")
         return []
 
 
@@ -28,14 +32,28 @@ def save_expenses(expenses):
 def add_expense(expenses, title, amount, category):
     """Add a new expense."""
 
+    if not title.strip():
+        print("Title cannot be empty.")
+        return False
+
+    if amount <= 0:
+        print("Amount must be greater than zero.")
+        return False
+
+    if not category.strip():
+        print("Category cannot be empty.")
+        return False
+
     expense = {
-        "title": title,
+        "title": title.strip(),
         "amount": amount,
-        "category": category,
+        "category": category.strip().title(),
         "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
     }
 
     expenses.append(expense)
+
+    return True
 
 
 def calculate_total(expenses):
@@ -52,31 +70,117 @@ def category_summary(expenses):
     for expense in expenses:
         category = expense["category"]
 
-        if category not in summary:
-            summary[category] = 0
-
-        summary[category] += expense["amount"]
+        summary[category] = (
+            summary.get(category, 0)
+            + expense["amount"]
+        )
 
     return summary
 
 
-expenses = load_expenses()
+def show_expenses(expenses):
+    """Display all expenses."""
 
-if not expenses:
-    add_expense(expenses, "Lunch", 150, "Food")
-    add_expense(expenses, "Bus", 50, "Transport")
-    add_expense(expenses, "Coffee", 120, "Food")
+    if not expenses:
+        print("\nNo expenses found.")
+        return
 
-    save_expenses(expenses)
+    print("\nExpense History")
+    print("-" * 60)
+
+    for index, expense in enumerate(expenses, start=1):
+        print(
+            f"{index}. "
+            f"{expense['date']} | "
+            f"{expense['title']} | "
+            f"{expense['category']} | "
+            f"{expense['amount']:.2f} BDT"
+        )
 
 
-print("Python Practice Day 9")
+def show_summary(expenses):
+    """Display expense statistics."""
 
-print(f"\nTotal: {calculate_total(expenses):.2f} BDT")
+    total = calculate_total(expenses)
+    summary = category_summary(expenses)
 
-print("\nCategory Summary:")
+    print("\nExpense Summary")
+    print("-" * 30)
+    print(f"Total spent: {total:.2f} BDT")
 
-summary = category_summary(expenses)
+    print("\nBy Category:")
 
-for category, amount in summary.items():
-    print(f"{category}: {amount:.2f} BDT")
+    if not summary:
+        print("No category data available.")
+        return
+
+    for category, amount in summary.items():
+        print(f"{category}: {amount:.2f} BDT")
+
+
+def get_amount():
+    """Get a valid amount from the user."""
+
+    while True:
+        try:
+            amount = float(input("Amount: "))
+
+            if amount <= 0:
+                print("Amount must be greater than zero.")
+                continue
+
+            return amount
+
+        except ValueError:
+            print("Please enter a valid number.")
+
+
+def main():
+    """Run the expense tracker."""
+
+    print("=" * 40)
+    print("      PYTHON EXPENSE TRACKER")
+    print("          Practice Day 9")
+    print("=" * 40)
+
+    expenses = load_expenses()
+
+    while True:
+        print("\n1. Add Expense")
+        print("2. View Expenses")
+        print("3. View Summary")
+        print("4. Exit")
+
+        choice = input("\nChoose an option: ").strip()
+
+        if choice == "1":
+            title = input("Title: ").strip()
+            category = input("Category: ").strip()
+            amount = get_amount()
+
+            if add_expense(
+                expenses,
+                title,
+                amount,
+                category,
+            ):
+                save_expenses(expenses)
+                print("Expense added successfully.")
+
+        elif choice == "2":
+            show_expenses(expenses)
+
+        elif choice == "3":
+            show_summary(expenses)
+
+        elif choice == "4":
+            save_expenses(expenses)
+            print("Data saved. Goodbye!")
+            break
+
+        else:
+            print("Invalid option. Please try again.")
+
+
+if __name__ == "__main__":
+    main()
