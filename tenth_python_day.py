@@ -23,7 +23,7 @@ class Weather:
         self.created_at = datetime.now()
 
     def get_temperature_status(self):
-        """Return a temperature description."""
+        """Return temperature status."""
 
         if self.temperature >= 35:
             return "Very Hot"
@@ -42,7 +42,8 @@ class Weather:
         print(f"City: {self.city}")
         print(f"Temperature: {self.temperature}°C")
         print(f"Condition: {self.condition}")
-        print(f"Created: {self.created_at:%Y-%m-%d %H:%M}")
+        print(f"Humidity: {self.humidity}%")
+        print(f"Wind Speed: {self.wind_speed} km/h")
 
 
 weather_history = []
@@ -71,14 +72,28 @@ def get_weather(city):
     return weather
 
 
-print("Python Practice Day 10")
+def find_weather_by_city(city):
+    """Find weather data by city."""
+
+    for weather in weather_history:
+        if weather.city.lower() == city.lower():
+            return weather
+
+    return None
+
 
 get_weather("Dhaka")
 get_weather("Khulna")
 get_weather("Sylhet")
 
-print("\nWeather History")
+print("Python Practice Day 10")
 
-for weather in weather_history:
+search_city = "Dhaka"
+
+weather = find_weather_by_city(search_city)
+
+if weather:
+    print(f"\nWeather found for {search_city}")
     weather.display()
-    print("-" * 30)
+else:
+    print("Weather data not found.")
