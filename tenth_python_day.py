@@ -20,11 +20,29 @@ class Weather:
         self.humidity = humidity
         self.wind_speed = wind_speed
 
+    def get_temperature_status(self):
+        """Return a temperature description."""
+
+        if self.temperature >= 35:
+            return "Very Hot"
+
+        if self.temperature >= 30:
+            return "Hot"
+
+        if self.temperature >= 25:
+            return "Warm"
+
+        return "Cool"
+
     def display(self):
         """Display weather information."""
 
         print(f"City: {self.city}")
         print(f"Temperature: {self.temperature}°C")
+        print(
+            f"Temperature Status: "
+            f"{self.get_temperature_status()}"
+        )
         print(f"Condition: {self.condition}")
         print(f"Humidity: {self.humidity}%")
         print(f"Wind Speed: {self.wind_speed} km/h")
@@ -49,8 +67,7 @@ def get_weather(city):
     )
 
 
-print("Python Practice Day 10")
-
 weather = get_weather("Dhaka")
 
+print("Python Practice Day 10")
 weather.display()
