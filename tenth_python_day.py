@@ -3,13 +3,20 @@
 import random
 
 
-cities = [
-    "Dhaka",
-    "Chattogram",
-    "Khulna",
-    "Rajshahi",
-    "Sylhet",
-]
+class Weather:
+    """Represent weather information."""
+
+    def __init__(self, city, temperature, condition):
+        self.city = city
+        self.temperature = temperature
+        self.condition = condition
+
+    def display(self):
+        """Display weather information."""
+
+        print(f"City: {self.city}")
+        print(f"Temperature: {self.temperature}°C")
+        print(f"Condition: {self.condition}")
 
 
 def get_weather(city):
@@ -26,17 +33,15 @@ def get_weather(city):
 
     condition = random.choice(conditions)
 
-    return {
-        "city": city,
-        "temperature": temperature,
-        "condition": condition,
-    }
+    return Weather(
+        city,
+        temperature,
+        condition,
+    )
 
 
 print("Python Practice Day 10")
 
 weather = get_weather("Dhaka")
 
-print(f"City: {weather['city']}")
-print(f"Temperature: {weather['temperature']}°C")
-print(f"Condition: {weather['condition']}")
+weather.display()
