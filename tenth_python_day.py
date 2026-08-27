@@ -12,16 +12,31 @@ cities = [
 ]
 
 
-def get_random_temperature():
-    """Return a random temperature."""
+def get_weather(city):
+    """Generate weather information."""
 
-    return random.randint(20, 38)
+    temperature = random.randint(20, 38)
+
+    conditions = [
+        "Sunny",
+        "Cloudy",
+        "Rainy",
+        "Windy",
+    ]
+
+    condition = random.choice(conditions)
+
+    return {
+        "city": city,
+        "temperature": temperature,
+        "condition": condition,
+    }
 
 
 print("Python Practice Day 10")
 
-city = random.choice(cities)
-temperature = get_random_temperature()
+weather = get_weather("Dhaka")
 
-print(f"City: {city}")
-print(f"Temperature: {temperature}°C")
+print(f"City: {weather['city']}")
+print(f"Temperature: {weather['temperature']}°C")
+print(f"Condition: {weather['condition']}")
