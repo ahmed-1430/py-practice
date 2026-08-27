@@ -23,7 +23,7 @@ class Weather:
         self.created_at = datetime.now()
 
     def get_temperature_status(self):
-        """Return temperature status."""
+        """Return a description of the temperature."""
 
         if self.temperature >= 35:
             return "Very Hot"
@@ -39,61 +39,127 @@ class Weather:
     def display(self):
         """Display weather information."""
 
+        print("\n" + "=" * 35)
         print(f"City: {self.city}")
         print(f"Temperature: {self.temperature}°C")
+        print(
+            f"Temperature Status: "
+            f"{self.get_temperature_status()}"
+        )
         print(f"Condition: {self.condition}")
         print(f"Humidity: {self.humidity}%")
         print(f"Wind Speed: {self.wind_speed} km/h")
+        print(
+            f"Created: "
+            f"{self.created_at:%Y-%m-%d %H:%M}"
+        )
+        print("=" * 35)
 
 
-weather_history = []
+class WeatherTracker:
+    """Manage weather data."""
+
+    def __init__(self):
+        self.weather_history = []
+
+    def generate_weather(self, city):
+        """Generate simulated weather data."""
+
+        conditions = [
+            "Sunny",
+            "Cloudy",
+            "Rainy",
+            "Windy",
+        ]
+
+        weather = Weather(
+            city=city.title(),
+            temperature=random.randint(20, 38),
+            condition=random.choice(conditions),
+            humidity=random.randint(40, 95),
+            wind_speed=random.randint(5, 30),
+        )
+
+        self.weather_history.append(weather)
+
+        return weather
+
+    def find_weather_by_city(self, city):
+        """Find the latest weather data for a city."""
+
+        for weather in reversed(self.weather_history):
+            if weather.city.lower() == city.lower():
+                return weather
+
+        return None
+
+    def show_history(self):
+        """Display all weather records."""
+
+        if not self.weather_history:
+            print("\nNo weather history found.")
+            return
+
+        print("\nWEATHER HISTORY")
+
+        for weather in self.weather_history:
+            weather.display()
 
 
-def get_weather(city):
-    """Generate weather information."""
+def main():
+    """Run the Day 10 weather tracker."""
 
-    conditions = [
-        "Sunny",
-        "Cloudy",
-        "Rainy",
-        "Windy",
+    print("=" * 40)
+    print(" PYTHON WEATHER TRACKER")
+    print("       PRACTICE DAY 10")
+    print("=" * 40)
+
+    tracker = WeatherTracker()
+
+    cities = [
+        "Dhaka",
+        "Chattogram",
+        "Khulna",
     ]
 
-    weather = Weather(
-        city=city,
-        temperature=random.randint(20, 38),
-        condition=random.choice(conditions),
-        humidity=random.randint(40, 95),
-        wind_speed=random.randint(5, 30),
-    )
+    while True:
+        print("\n1. Generate Weather")
+        print("2. Search City")
+        print("3. View History")
+        print("4. Exit")
 
-    weather_history.append(weather)
+        choice = input("\nChoose an option: ").strip()
 
-    return weather
+        if choice == "1":
+            city = input("Enter city name: ").strip()
+
+            if city:
+                weather = tracker.generate_weather(city)
+                print("\nWeather generated successfully.")
+                weather.display()
+            else:
+                print("City name cannot be empty.")
+
+        elif choice == "2":
+            city = input("Enter city name: ").strip()
+
+            weather = tracker.find_weather_by_city(city)
+
+            if weather:
+                weather.display()
+            else:
+                print("Weather data not found.")
+
+        elif choice == "3":
+            tracker.show_history()
+
+        elif choice == "4":
+            print("\nThanks for practicing Python!")
+            break
+
+        else:
+            print("Invalid option. Please try again.")
 
 
-def find_weather_by_city(city):
-    """Find weather data by city."""
-
-    for weather in weather_history:
-        if weather.city.lower() == city.lower():
-            return weather
-
-    return None
-
-
-get_weather("Dhaka")
-get_weather("Khulna")
-get_weather("Sylhet")
-
-print("Python Practice Day 10")
-
-search_city = "Dhaka"
-
-weather = find_weather_by_city(search_city)
-
-if weather:
-    print(f"\nWeather found for {search_city}")
-    weather.display()
-else:
-    print("Weather data not found.")
+if __name__ == "__main__":
+    main()
