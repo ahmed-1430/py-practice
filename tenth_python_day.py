@@ -106,6 +106,7 @@ class WeatherTracker:
             weather.display()
 
 
+
 def main():
     """Run the Day 10 weather tracker."""
 
@@ -159,6 +160,7 @@ def main():
 
         else:
             print("Invalid option. Please try again.")
+
 
 
 if __name__ == "__main__":
