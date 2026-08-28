@@ -22,6 +22,8 @@ class Weather:
         self.wind_speed = wind_speed
         self.created_at = datetime.now()
 
+
+    
     def get_temperature_status(self):
         """Return a description of the temperature."""
 
@@ -36,6 +38,8 @@ class Weather:
 
         return "Cool"
 
+
+    
     def display(self):
         """Display weather information."""
 
@@ -104,6 +108,8 @@ class WeatherTracker:
 
         for weather in self.weather_history:
             weather.display()
+
+
 
 
 
