@@ -12,7 +12,6 @@ class GitHubUser:
         self.bio = data.get("bio")
         self.public_repos = data.get("public_repos")
         self.followers = data.get("followers")
-        self.following = data.get("following")
 
     def display(self):
         """Display user information."""
@@ -21,10 +20,8 @@ class GitHubUser:
         print("-" * 30)
         print(f"Name: {self.name or 'Not available'}")
         print(f"Username: {self.username}")
-        print(f"Bio: {self.bio or 'Not available'}")
         print(f"Repositories: {self.public_repos}")
         print(f"Followers: {self.followers}")
-        print(f"Following: {self.following}")
 
 
 def get_github_user(username):
@@ -32,20 +29,41 @@ def get_github_user(username):
 
     url = f"https://api.github.com/users/{username}"
 
-    try:
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
+    response = requests.get(url, timeout=10)
+    response.raise_for_status()
 
-        return GitHubUser(response.json())
-
-    except requests.exceptions.RequestException as error:
-        print(f"Error: {error}")
-        return None
+    return GitHubUser(response.json())
 
 
-user = get_github_user("ahmed-1430")
+def get_user_repositories(username):
+    """Fetch GitHub user repositories."""
+
+    url = f"https://api.github.com/users/{username}/repos"
+
+    response = requests.get(
+        url,
+        timeout=10,
+    )
+
+    response.raise_for_status()
+
+    return response.json()
+
+
+username = "ahmed-1430"
 
 print("Python Practice Day 11")
 
-if user:
+try:
+    user = get_github_user(username)
+    repositories = get_user_repositories(username)
+
     user.display()
+
+    print("\nRepositories:")
+
+    for repo in repositories:
+        print(f"- {repo['name']}")
+
+except requests.exceptions.RequestException as error:
+    print(f"API Error: {error}")
