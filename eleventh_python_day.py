@@ -4,17 +4,33 @@ import requests
 
 
 def get_github_user(username):
-    """Fetch GitHub user data."""
+    """Fetch GitHub user data safely."""
 
     url = f"https://api.github.com/users/{username}"
 
-    response = requests.get(url)
+    try:
+        response = requests.get(
+            url,
+            timeout=10,
+        )
 
-    if response.status_code == 404:
+        response.raise_for_status()
+
+        return response.json()
+
+    except requests.exceptions.HTTPError:
         print("GitHub user not found.")
-        return None
 
-    return response.json()
+    except requests.exceptions.ConnectionError:
+        print("Internet connection error.")
+
+    except requests.exceptions.Timeout:
+        print("Request timed out.")
+
+    except requests.exceptions.RequestException as error:
+        print(f"Something went wrong: {error}")
+
+    return None
 
 
 username = "ahmed-1430"
@@ -26,4 +42,4 @@ print("Python Practice Day 11")
 if user:
     print(f"Name: {user.get('name')}")
     print(f"Username: {user.get('login')}")
-    print(f"Public Repositories: {user.get('public_repos')}")
+    print(f"Followers: {user.get('followers')}")
