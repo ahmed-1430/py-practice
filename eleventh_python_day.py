@@ -3,17 +3,6 @@
 import requests
 
 
-def get_github_user(username):
-    """Fetch GitHub user data."""
-
-    url = f"https://api.github.com/users/{username}"
-
-    response = requests.get(url, timeout=10)
-    response.raise_for_status()
-
-    return response.json()
-
-
 def get_user_repositories(username):
     """Fetch GitHub repositories."""
 
@@ -35,35 +24,16 @@ def get_user_repositories(username):
     return response.json()
 
 
-def calculate_repository_stats(repositories):
-    """Calculate repository statistics."""
+def search_repositories(repositories, keyword):
+    """Search repositories by name."""
 
-    total_stars = sum(
-        repo["stargazers_count"]
-        for repo in repositories
-    )
-
-    total_forks = sum(
-        repo["forks_count"]
-        for repo in repositories
-    )
-
-    languages = {}
+    results = []
 
     for repo in repositories:
-        language = repo.get("language")
+        if keyword.lower() in repo["name"].lower():
+            results.append(repo)
 
-        if language:
-            languages[language] = (
-                languages.get(language, 0) + 1
-            )
-
-    return {
-        "total_repositories": len(repositories),
-        "total_stars": total_stars,
-        "total_forks": total_forks,
-        "languages": languages,
-    }
+    return results
 
 
 username = "ahmed-1430"
@@ -73,16 +43,25 @@ print("Python Practice Day 11")
 try:
     repositories = get_user_repositories(username)
 
-    stats = calculate_repository_stats(repositories)
+    keyword = input(
+        "Search repository: "
+    ).strip()
 
-    print(f"Repositories: {stats['total_repositories']}")
-    print(f"Stars: {stats['total_stars']}")
-    print(f"Forks: {stats['total_forks']}")
+    results = search_repositories(
+        repositories,
+        keyword,
+    )
 
-    print("\nLanguages:")
+    if results:
+        print("\nRepositories Found:")
 
-    for language, count in stats["languages"].items():
-        print(f"{language}: {count}")
+        for repo in results:
+            print(
+                f"- {repo['name']} "
+                f"⭐ {repo['stargazers_count']}"
+            )
+    else:
+        print("No repositories found.")
 
 except requests.exceptions.RequestException as error:
     print(f"API Error: {error}")
