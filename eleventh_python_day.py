@@ -3,43 +3,49 @@
 import requests
 
 
+class GitHubUser:
+    """Represent a GitHub user."""
+
+    def __init__(self, data):
+        self.name = data.get("name")
+        self.username = data.get("login")
+        self.bio = data.get("bio")
+        self.public_repos = data.get("public_repos")
+        self.followers = data.get("followers")
+        self.following = data.get("following")
+
+    def display(self):
+        """Display user information."""
+
+        print("\nGitHub User Information")
+        print("-" * 30)
+        print(f"Name: {self.name or 'Not available'}")
+        print(f"Username: {self.username}")
+        print(f"Bio: {self.bio or 'Not available'}")
+        print(f"Repositories: {self.public_repos}")
+        print(f"Followers: {self.followers}")
+        print(f"Following: {self.following}")
+
+
 def get_github_user(username):
-    """Fetch GitHub user data safely."""
+    """Fetch GitHub user data."""
 
     url = f"https://api.github.com/users/{username}"
 
     try:
-        response = requests.get(
-            url,
-            timeout=10,
-        )
-
+        response = requests.get(url, timeout=10)
         response.raise_for_status()
 
-        return response.json()
-
-    except requests.exceptions.HTTPError:
-        print("GitHub user not found.")
-
-    except requests.exceptions.ConnectionError:
-        print("Internet connection error.")
-
-    except requests.exceptions.Timeout:
-        print("Request timed out.")
+        return GitHubUser(response.json())
 
     except requests.exceptions.RequestException as error:
-        print(f"Something went wrong: {error}")
+        print(f"Error: {error}")
+        return None
 
-    return None
 
-
-username = "ahmed-1430"
-
-user = get_github_user(username)
+user = get_github_user("ahmed-1430")
 
 print("Python Practice Day 11")
 
 if user:
-    print(f"Name: {user.get('name')}")
-    print(f"Username: {user.get('login')}")
-    print(f"Followers: {user.get('followers')}")
+    user.display()
