@@ -3,27 +3,6 @@
 import requests
 
 
-class GitHubUser:
-    """Represent a GitHub user."""
-
-    def __init__(self, data):
-        self.name = data.get("name")
-        self.username = data.get("login")
-        self.bio = data.get("bio")
-        self.public_repos = data.get("public_repos")
-        self.followers = data.get("followers")
-
-    def display(self):
-        """Display user information."""
-
-        print("\nGitHub User Information")
-        print("-" * 30)
-        print(f"Name: {self.name or 'Not available'}")
-        print(f"Username: {self.username}")
-        print(f"Repositories: {self.public_repos}")
-        print(f"Followers: {self.followers}")
-
-
 def get_github_user(username):
     """Fetch GitHub user data."""
 
@@ -32,16 +11,22 @@ def get_github_user(username):
     response = requests.get(url, timeout=10)
     response.raise_for_status()
 
-    return GitHubUser(response.json())
+    return response.json()
 
 
 def get_user_repositories(username):
-    """Fetch GitHub user repositories."""
+    """Fetch GitHub repositories."""
 
     url = f"https://api.github.com/users/{username}/repos"
 
+    params = {
+        "per_page": 100,
+        "sort": "updated",
+    }
+
     response = requests.get(
         url,
+        params=params,
         timeout=10,
     )
 
@@ -50,20 +35,54 @@ def get_user_repositories(username):
     return response.json()
 
 
+def calculate_repository_stats(repositories):
+    """Calculate repository statistics."""
+
+    total_stars = sum(
+        repo["stargazers_count"]
+        for repo in repositories
+    )
+
+    total_forks = sum(
+        repo["forks_count"]
+        for repo in repositories
+    )
+
+    languages = {}
+
+    for repo in repositories:
+        language = repo.get("language")
+
+        if language:
+            languages[language] = (
+                languages.get(language, 0) + 1
+            )
+
+    return {
+        "total_repositories": len(repositories),
+        "total_stars": total_stars,
+        "total_forks": total_forks,
+        "languages": languages,
+    }
+
+
 username = "ahmed-1430"
 
 print("Python Practice Day 11")
 
 try:
-    user = get_github_user(username)
     repositories = get_user_repositories(username)
 
-    user.display()
+    stats = calculate_repository_stats(repositories)
 
-    print("\nRepositories:")
+    print(f"Repositories: {stats['total_repositories']}")
+    print(f"Stars: {stats['total_stars']}")
+    print(f"Forks: {stats['total_forks']}")
 
-    for repo in repositories:
-        print(f"- {repo['name']}")
+    print("\nLanguages:")
+
+    for language, count in stats["languages"].items():
+        print(f"{language}: {count}")
 
 except requests.exceptions.RequestException as error:
     print(f"API Error: {error}")
