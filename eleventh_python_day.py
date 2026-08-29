@@ -3,10 +3,20 @@
 import requests
 
 
-url = "https://api.github.com/users/ahmed-1430"
+def get_github_user(username):
+    """Fetch GitHub user data."""
 
-response = requests.get(url)
+    url = f"https://api.github.com/users/{username}"
+
+    response = requests.get(url)
+
+    return response.json()
+
+
+user = get_github_user("ahmed-1430")
 
 print("Python Practice Day 11")
-print(response.status_code)
-print(response.json())
+print(f"Name: {user.get('name')}")
+print(f"Username: {user.get('login')}")
+print(f"Bio: {user.get('bio')}")
+print(f"Public Repositories: {user.get('public_repos')}")
