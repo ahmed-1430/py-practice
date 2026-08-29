@@ -10,13 +10,20 @@ def get_github_user(username):
 
     response = requests.get(url)
 
+    if response.status_code == 404:
+        print("GitHub user not found.")
+        return None
+
     return response.json()
 
 
-user = get_github_user("ahmed-1430")
+username = "ahmed-1430"
+
+user = get_github_user(username)
 
 print("Python Practice Day 11")
-print(f"Name: {user.get('name')}")
-print(f"Username: {user.get('login')}")
-print(f"Bio: {user.get('bio')}")
-print(f"Public Repositories: {user.get('public_repos')}")
+
+if user:
+    print(f"Name: {user.get('name')}")
+    print(f"Username: {user.get('login')}")
+    print(f"Public Repositories: {user.get('public_repos')}")
