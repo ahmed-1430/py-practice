@@ -5,110 +5,96 @@ import asyncio
 import aiohttp
 
 
-async def get_repositories(
+async def get_github_user(
     session,
     username,
 ):
-    """Fetch repositories."""
+    """Fetch GitHub user."""
 
     url = (
         f"https://api.github.com/"
-        f"users/{username}/repos"
+        f"users/{username}"
     )
 
-    params = {
-        "per_page": 100,
-    }
+    try:
+        async with session.get(url) as response:
+            if response.status != 200:
+                return None
 
-    async with session.get(
-        url,
-        params=params,
-    ) as response:
-        if response.status != 200:
-            return []
+            return await response.json()
 
-        return await response.json()
+    except aiohttp.ClientError:
+        return None
 
 
-def calculate_stats(repositories):
-    """Calculate repository statistics."""
+async def analyze_user(
+    session,
+    username,
+):
+    """Analyze a GitHub user."""
 
-    total_stars = sum(
-        repo.get(
-            "stargazers_count",
-            0,
-        )
-        for repo in repositories
+    user = await get_github_user(
+        session,
+        username,
     )
 
-    total_forks = sum(
-        repo.get(
-            "forks_count",
-            0,
-        )
-        for repo in repositories
-    )
-
-    languages = {}
-
-    for repo in repositories:
-        language = repo.get("language")
-
-        if language:
-            languages[language] = (
-                languages.get(language, 0)
-                + 1
-            )
+    if not user:
+        return None
 
     return {
-        "repositories": len(repositories),
-        "stars": total_stars,
-        "forks": total_forks,
-        "languages": languages,
+        "username": user.get("login"),
+        "followers": user.get(
+            "followers",
+            0,
+        ),
+        "repositories": user.get(
+            "public_repos",
+            0,
+        ),
     }
 
 
 async def main():
-    """Run the application."""
+    """Analyze users concurrently."""
 
-    username = "ahmed-1430"
+    usernames = [
+        "ahmed-1430",
+        "torvalds",
+        "octocat",
+    ]
 
     async with aiohttp.ClientSession() as session:
 
-        repositories = await get_repositories(
-            session,
-            username,
-        )
+        tasks = [
+            analyze_user(
+                session,
+                username,
+            )
+            for username in usernames
+        ]
 
-        stats = calculate_stats(
-            repositories
+        results = await asyncio.gather(
+            *tasks
         )
 
         print("Python Practice Day 12")
+        print("\nGitHub User Comparison")
 
-        print(
-            f"Repositories: "
-            f"{stats['repositories']}"
-        )
+        for user in results:
+            if user:
+                print(
+                    f"\n{user['username']}"
+                )
 
-        print(
-            f"Stars: "
-            f"{stats['stars']}"
-        )
+                print(
+                    f"Followers: "
+                    f"{user['followers']}"
+                )
 
-        print(
-            f"Forks: "
-            f"{stats['forks']}"
-        )
-
-        print("\nLanguages:")
-
-        for language, count in (
-            stats["languages"].items()
-        ):
-            print(
-                f"{language}: {count}"
-            )
+                print(
+                    f"Repositories: "
+                    f"{user['repositories']}"
+                )
 
 
 asyncio.run(main())
