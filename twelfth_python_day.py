@@ -5,47 +5,81 @@ import asyncio
 import aiohttp
 
 
-async def get_github_user(session, username):
-    """Fetch GitHub user data."""
+class GitHubUser:
+    """Represent GitHub user information."""
 
-    url = f"https://api.github.com/users/{username}"
+    def __init__(self, data):
+        self.username = data.get("login")
+        self.name = data.get("name")
+        self.followers = data.get(
+            "followers",
+            0,
+        )
+        self.public_repos = data.get(
+            "public_repos",
+            0,
+        )
+
+    def display(self):
+        """Display user information."""
+
+        print(
+            f"\nUsername: {self.username}"
+        )
+
+        print(
+            f"Name: "
+            f"{self.name or 'Not available'}"
+        )
+
+        print(
+            f"Followers: {self.followers}"
+        )
+
+        print(
+            f"Public Repositories: "
+            f"{self.public_repos}"
+        )
+
+
+async def get_github_user(
+    session,
+    username,
+):
+    """Fetch a GitHub user."""
+
+    url = (
+        f"https://api.github.com/"
+        f"users/{username}"
+    )
 
     try:
         async with session.get(url) as response:
             if response.status != 200:
-                print(
-                    f"Could not fetch "
-                    f"{username}"
-                )
                 return None
 
-            return await response.json()
+            data = await response.json()
 
-    except aiohttp.ClientError as error:
-        print(
-            f"Error fetching "
-            f"{username}: {error}"
-        )
+            return GitHubUser(data)
 
+    except aiohttp.ClientError:
         return None
 
 
 async def main():
-    """Fetch multiple users concurrently."""
+    """Run the application."""
 
     usernames = [
         "ahmed-1430",
         "torvalds",
-        "octocat",
     ]
 
-    timeout = aiohttp.ClientTimeout(total=10)
-
-    async with aiohttp.ClientSession(
-        timeout=timeout
-    ) as session:
+    async with aiohttp.ClientSession() as session:
         tasks = [
-            get_github_user(session, username)
+            get_github_user(
+                session,
+                username,
+            )
             for username in usernames
         ]
 
@@ -55,10 +89,7 @@ async def main():
 
         for user in users:
             if user:
-                print(
-                    f"{user['login']} - "
-                    f"{user['followers']} followers"
-                )
+                user.display()
 
 
 asyncio.run(main())
