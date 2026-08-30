@@ -5,91 +5,83 @@ import asyncio
 import aiohttp
 
 
-class GitHubUser:
-    """Represent GitHub user information."""
-
-    def __init__(self, data):
-        self.username = data.get("login")
-        self.name = data.get("name")
-        self.followers = data.get(
-            "followers",
-            0,
-        )
-        self.public_repos = data.get(
-            "public_repos",
-            0,
-        )
-
-    def display(self):
-        """Display user information."""
-
-        print(
-            f"\nUsername: {self.username}"
-        )
-
-        print(
-            f"Name: "
-            f"{self.name or 'Not available'}"
-        )
-
-        print(
-            f"Followers: {self.followers}"
-        )
-
-        print(
-            f"Public Repositories: "
-            f"{self.public_repos}"
-        )
-
-
 async def get_github_user(
     session,
     username,
 ):
-    """Fetch a GitHub user."""
+    """Fetch GitHub user data."""
 
     url = (
         f"https://api.github.com/"
         f"users/{username}"
     )
 
-    try:
-        async with session.get(url) as response:
-            if response.status != 200:
-                return None
+    async with session.get(url) as response:
+        if response.status != 200:
+            return None
 
-            data = await response.json()
+        return await response.json()
 
-            return GitHubUser(data)
 
-    except aiohttp.ClientError:
-        return None
+async def get_repositories(
+    session,
+    username,
+):
+    """Fetch user repositories."""
+
+    url = (
+        f"https://api.github.com/"
+        f"users/{username}/repos"
+    )
+
+    params = {
+        "per_page": 100,
+    }
+
+    async with session.get(
+        url,
+        params=params,
+    ) as response:
+        if response.status != 200:
+            return []
+
+        return await response.json()
 
 
 async def main():
-    """Run the application."""
+    """Fetch profile and repositories concurrently."""
 
-    usernames = [
-        "ahmed-1430",
-        "torvalds",
-    ]
+    username = "ahmed-1430"
 
     async with aiohttp.ClientSession() as session:
-        tasks = [
-            get_github_user(
-                session,
-                username,
-            )
-            for username in usernames
-        ]
 
-        users = await asyncio.gather(*tasks)
+        user_task = get_github_user(
+            session,
+            username,
+        )
+
+        repo_task = get_repositories(
+            session,
+            username,
+        )
+
+        user, repositories = await asyncio.gather(
+            user_task,
+            repo_task,
+        )
 
         print("Python Practice Day 12")
 
-        for user in users:
-            if user:
-                user.display()
+        if user:
+            print(
+                f"Username: "
+                f"{user['login']}"
+            )
+
+        print(
+            f"Repositories fetched: "
+            f"{len(repositories)}"
+        )
 
 
 asyncio.run(main())
