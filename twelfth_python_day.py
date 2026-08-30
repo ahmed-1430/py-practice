@@ -5,29 +5,11 @@ import asyncio
 import aiohttp
 
 
-async def get_github_user(
-    session,
-    username,
-):
-    """Fetch GitHub user data."""
-
-    url = (
-        f"https://api.github.com/"
-        f"users/{username}"
-    )
-
-    async with session.get(url) as response:
-        if response.status != 200:
-            return None
-
-        return await response.json()
-
-
 async def get_repositories(
     session,
     username,
 ):
-    """Fetch user repositories."""
+    """Fetch repositories."""
 
     url = (
         f"https://api.github.com/"
@@ -48,40 +30,85 @@ async def get_repositories(
         return await response.json()
 
 
+def calculate_stats(repositories):
+    """Calculate repository statistics."""
+
+    total_stars = sum(
+        repo.get(
+            "stargazers_count",
+            0,
+        )
+        for repo in repositories
+    )
+
+    total_forks = sum(
+        repo.get(
+            "forks_count",
+            0,
+        )
+        for repo in repositories
+    )
+
+    languages = {}
+
+    for repo in repositories:
+        language = repo.get("language")
+
+        if language:
+            languages[language] = (
+                languages.get(language, 0)
+                + 1
+            )
+
+    return {
+        "repositories": len(repositories),
+        "stars": total_stars,
+        "forks": total_forks,
+        "languages": languages,
+    }
+
+
 async def main():
-    """Fetch profile and repositories concurrently."""
+    """Run the application."""
 
     username = "ahmed-1430"
 
     async with aiohttp.ClientSession() as session:
 
-        user_task = get_github_user(
+        repositories = await get_repositories(
             session,
             username,
         )
 
-        repo_task = get_repositories(
-            session,
-            username,
-        )
-
-        user, repositories = await asyncio.gather(
-            user_task,
-            repo_task,
+        stats = calculate_stats(
+            repositories
         )
 
         print("Python Practice Day 12")
 
-        if user:
-            print(
-                f"Username: "
-                f"{user['login']}"
-            )
+        print(
+            f"Repositories: "
+            f"{stats['repositories']}"
+        )
 
         print(
-            f"Repositories fetched: "
-            f"{len(repositories)}"
+            f"Stars: "
+            f"{stats['stars']}"
         )
+
+        print(
+            f"Forks: "
+            f"{stats['forks']}"
+        )
+
+        print("\nLanguages:")
+
+        for language, count in (
+            stats["languages"].items()
+        ):
+            print(
+                f"{language}: {count}"
+            )
 
 
 asyncio.run(main())
