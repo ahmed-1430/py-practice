@@ -14,10 +14,13 @@ async def task(name, delay):
 
 
 async def main():
-    """Run async tasks."""
+    """Run multiple tasks concurrently."""
 
-    await task("Task One", 1)
-    await task("Task Two", 2)
+    await asyncio.gather(
+        task("Task One", 3),
+        task("Task Two", 2),
+        task("Task Three", 1),
+    )
 
 
 asyncio.run(main())
