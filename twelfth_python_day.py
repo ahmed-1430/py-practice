@@ -3,16 +3,21 @@
 import asyncio
 
 
-async def greet():
-    """Print an async greeting."""
+async def task(name, delay):
+    """Run an async task."""
 
-    print("Hello from async Python!")
+    print(f"{name} started.")
+
+    await asyncio.sleep(delay)
+
+    print(f"{name} completed.")
 
 
 async def main():
-    """Run the program."""
+    """Run async tasks."""
 
-    await greet()
+    await task("Task One", 1)
+    await task("Task Two", 2)
 
 
 asyncio.run(main())
