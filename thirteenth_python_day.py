@@ -1,12 +1,29 @@
 """My thirteenth day practicing Python."""
 
 
-numbers = [10, 20, 30, 40, 50]
+class NumberIterator:
+    """Create a simple custom iterator."""
 
-number_iterator = iter(numbers)
+    def __init__(self, start, end):
+        self.current = start
+        self.end = end
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current > self.end:
+            raise StopIteration
+
+        number = self.current
+        self.current += 1
+
+        return number
+
 
 print("Python Practice Day 13")
 
-print(next(number_iterator))
-print(next(number_iterator))
-print(next(number_iterator))
+numbers = NumberIterator(1, 5)
+
+for number in numbers:
+    print(number)
