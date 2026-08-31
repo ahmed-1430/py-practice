@@ -1,23 +1,26 @@
 """My thirteenth day practicing Python."""
 
 
-tasks = [
-    "Learn Python",
-    "Practice Functions",
-    "Build a Project",
-    "Push Code to GitHub",
-]
+def log_function(func):
+    """Log function execution."""
+
+    def wrapper():
+        print(f"Running {func.__name__}...")
+
+        func()
+
+        print(f"{func.__name__} completed.")
+
+    return wrapper
 
 
-def generate_tasks(task_list):
-    """Generate tasks one by one."""
+@log_function
+def practice_python():
+    """Practice Python."""
 
-    for task in task_list:
-        yield task
+    print("Learning decorators!")
 
 
 print("Python Practice Day 13")
-print("\nTasks:")
 
-for task in generate_tasks(tasks):
-    print(f"- {task}")
+practice_python()
