@@ -1,17 +1,23 @@
 """My thirteenth day practicing Python."""
 
 
-def generate_numbers(start, end):
-    """Generate numbers using yield."""
+tasks = [
+    "Learn Python",
+    "Practice Functions",
+    "Build a Project",
+    "Push Code to GitHub",
+]
 
-    current = start
 
-    while current <= end:
-        yield current
-        current += 1
+def generate_tasks(task_list):
+    """Generate tasks one by one."""
+
+    for task in task_list:
+        yield task
 
 
 print("Python Practice Day 13")
+print("\nTasks:")
 
-for number in generate_numbers(1, 10):
-    print(number)
+for task in generate_tasks(tasks):
+    print(f"- {task}")
