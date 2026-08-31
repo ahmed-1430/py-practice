@@ -1,29 +1,17 @@
 """My thirteenth day practicing Python."""
 
 
-class NumberIterator:
-    """Create a simple custom iterator."""
+def generate_numbers(start, end):
+    """Generate numbers using yield."""
 
-    def __init__(self, start, end):
-        self.current = start
-        self.end = end
+    current = start
 
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.current > self.end:
-            raise StopIteration
-
-        number = self.current
-        self.current += 1
-
-        return number
+    while current <= end:
+        yield current
+        current += 1
 
 
 print("Python Practice Day 13")
 
-numbers = NumberIterator(1, 5)
-
-for number in numbers:
+for number in generate_numbers(1, 10):
     print(number)
