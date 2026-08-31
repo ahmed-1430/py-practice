@@ -1,26 +1,32 @@
 """My thirteenth day practicing Python."""
 
 
-def log_function(func):
-    """Log function execution."""
+def log_task(func):
+    """Log task processing."""
 
-    def wrapper():
-        print(f"Running {func.__name__}...")
+    def wrapper(task):
+        print(f"\nStarting task: {task}")
 
-        func()
+        result = func(task)
 
-        print(f"{func.__name__} completed.")
+        print(f"Completed task: {task}")
+
+        return result
 
     return wrapper
 
 
-@log_function
-def practice_python():
-    """Practice Python."""
+@log_task
+def process_task(task):
+    """Process a task."""
 
-    print("Learning decorators!")
+    return task.upper()
 
 
 print("Python Practice Day 13")
 
-practice_python()
+task = "Learn Python Generators"
+
+result = process_task(task)
+
+print(f"Result: {result}")
