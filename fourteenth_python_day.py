@@ -4,19 +4,36 @@ from datetime import datetime
 
 
 class BankAccount:
-    """Represent a simple bank account."""
+    """Represent a bank account."""
 
     def __init__(self, owner, balance=0):
-        self.owner = owner
+        """Initialize a bank account."""
+
+        if not owner.strip():
+            raise ValueError(
+                "Account owner cannot be empty."
+            )
+
+        if balance < 0:
+            raise ValueError(
+                "Initial balance cannot be negative."
+            )
+
+        self.owner = owner.strip()
         self.balance = balance
         self.transactions = []
 
-    def add_transaction(self, transaction_type, amount):
-        """Save a transaction."""
+    def add_transaction(
+        self,
+        transaction_type,
+        amount,
+    ):
+        """Add a transaction to history."""
 
         transaction = {
             "type": transaction_type,
             "amount": amount,
+            "balance": self.balance,
             "date": datetime.now().strftime(
                 "%Y-%m-%d %H:%M:%S"
             ),
@@ -27,7 +44,7 @@ class BankAccount:
         )
 
     def deposit(self, amount):
-        """Add valid money to the account."""
+        """Deposit money into the account."""
 
         if amount <= 0:
             raise ValueError(
@@ -44,7 +61,7 @@ class BankAccount:
         return self.balance
 
     def withdraw(self, amount):
-        """Withdraw valid money."""
+        """Withdraw money from the account."""
 
         if amount <= 0:
             raise ValueError(
@@ -66,34 +83,14 @@ class BankAccount:
         return self.balance
 
     def get_transaction_history(self):
-        """Return transaction history."""
+        """Return all transactions."""
 
-        return self.transactions
+        return self.transactions.copy()
 
     def display_balance(self):
-        """Display current balance."""
+        """Return formatted account balance."""
 
         return (
             f"{self.owner}'s balance: "
             f"{self.balance:.2f} BDT"
-        )
-
-
-if __name__ == "__main__":
-    account = BankAccount("Ahmed", 1000)
-
-    account.deposit(500)
-    account.withdraw(200)
-
-    print("Python Practice Day 14")
-    print(account.display_balance())
-
-    print("\nTransactions:")
-
-    for transaction in (
-        account.get_transaction_history()
-    ):
-        print(
-            f"{transaction['type']} - "
-            f"{transaction['amount']} BDT"
         )
