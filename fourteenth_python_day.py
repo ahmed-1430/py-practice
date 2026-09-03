@@ -20,6 +20,23 @@ class BankAccount:
 
         return self.balance
 
+    def withdraw(self, amount):
+        """Withdraw money from the account."""
+
+        if amount <= 0:
+            raise ValueError(
+                "Withdrawal amount must be greater than zero."
+            )
+
+        if amount > self.balance:
+            raise ValueError(
+                "Insufficient balance."
+            )
+
+        self.balance -= amount
+
+        return self.balance
+
     def display_balance(self):
         """Display the current balance."""
 
@@ -31,9 +48,8 @@ class BankAccount:
 
 account = BankAccount("Ahmed", 1000)
 
-try:
-    account.deposit(500)
-    print(account.display_balance())
+account.deposit(500)
+account.withdraw(300)
 
-except ValueError as error:
-    print(f"Error: {error}")
+print("Python Practice Day 14")
+print(account.display_balance())
