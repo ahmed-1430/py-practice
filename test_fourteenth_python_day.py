@@ -9,7 +9,7 @@ class TestBankAccount(unittest.TestCase):
     """Test the BankAccount class."""
 
     def setUp(self):
-        """Create a fresh account before each test."""
+        """Create a fresh account."""
 
         self.account = BankAccount(
             "Ahmed",
@@ -32,16 +32,21 @@ class TestBankAccount(unittest.TestCase):
     def test_deposit(self):
         """Test depositing money."""
 
-        result = self.account.deposit(500)
-
-        self.assertEqual(
-            result,
-            1500,
-        )
+        self.account.deposit(500)
 
         self.assertEqual(
             self.account.balance,
             1500,
+        )
+
+    def test_withdraw(self):
+        """Test withdrawing money."""
+
+        self.account.withdraw(300)
+
+        self.assertEqual(
+            self.account.balance,
+            700,
         )
 
 
