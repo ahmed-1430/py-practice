@@ -9,7 +9,12 @@ class BankAccount:
         self.balance = balance
 
     def deposit(self, amount):
-        """Add money to the account."""
+        """Add valid money to the account."""
+
+        if amount <= 0:
+            raise ValueError(
+                "Deposit amount must be greater than zero."
+            )
 
         self.balance += amount
 
@@ -26,7 +31,9 @@ class BankAccount:
 
 account = BankAccount("Ahmed", 1000)
 
-account.deposit(500)
+try:
+    account.deposit(500)
+    print(account.display_balance())
 
-print("Python Practice Day 14")
-print(account.display_balance())
+except ValueError as error:
+    print(f"Error: {error}")
