@@ -63,5 +63,32 @@ class TestBankAccount(unittest.TestCase):
             self.account.withdraw(2000)
 
 
+def test_transaction_history(self):
+    """Test transaction history."""
+
+    self.account.deposit(500)
+    self.account.withdraw(200)
+
+    transactions = (
+        self.account.get_transaction_history()
+    )
+
+    self.assertEqual(
+        len(transactions),
+        2,
+    )
+
+    self.assertEqual(
+        transactions[0]["type"],
+        "Deposit",
+    )
+
+    self.assertEqual(
+        transactions[1]["type"],
+        "Withdrawal",
+    )
+
 if __name__ == "__main__":
     unittest.main()
+
+    
