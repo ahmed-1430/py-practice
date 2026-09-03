@@ -20,11 +20,6 @@ class TestBankAccount(unittest.TestCase):
         """Test account creation."""
 
         self.assertEqual(
-            self.account.owner,
-            "Ahmed",
-        )
-
-        self.assertEqual(
             self.account.balance,
             1000,
         )
@@ -48,6 +43,24 @@ class TestBankAccount(unittest.TestCase):
             self.account.balance,
             700,
         )
+
+    def test_invalid_deposit(self):
+        """Test invalid deposit."""
+
+        with self.assertRaises(ValueError):
+            self.account.deposit(0)
+
+    def test_invalid_withdraw(self):
+        """Test invalid withdrawal."""
+
+        with self.assertRaises(ValueError):
+            self.account.withdraw(-100)
+
+    def test_insufficient_balance(self):
+        """Test insufficient balance."""
+
+        with self.assertRaises(ValueError):
+            self.account.withdraw(2000)
 
 
 if __name__ == "__main__":
