@@ -46,10 +46,4 @@ class BankAccount:
         )
 
 
-account = BankAccount("Ahmed", 1000)
-
-account.deposit(500)
-account.withdraw(300)
-
 print("Python Practice Day 14")
-print(account.display_balance())
